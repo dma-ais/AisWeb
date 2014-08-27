@@ -1,3 +1,11 @@
-+ Do AisWebApp 
++ Look into rest proxy options
+	https://github.com/mitre/HTTP-Proxy-Servlet
+	Could use maven properties to put into web.xml (separate project)
 
-+ 
++ Look into simple web framework (we need to be able to configure rest urls)
+
++ Make AisWeb the root context on ais.e-navigation.net (standalone app)
+
++ Start integrating rest data into test page
+
++  

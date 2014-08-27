@@ -38,10 +38,17 @@ public class AisWebApp extends AbstractDaemon {
     @Override
     protected void runDaemon(Injector injector) throws Exception {
         final Server server = new Server(port);
+        
+        org.eclipse.jetty.webapp.Configuration.ClassList classlist = org.eclipse.jetty.webapp.Configuration.ClassList.setServerDefault(server);
+        classlist.addAfter("org.eclipse.jetty.webapp.FragmentConfiguration", "org.eclipse.jetty.plus.webapp.EnvConfiguration", "org.eclipse.jetty.plus.webapp.PlusConfiguration");
+        classlist.addBefore("org.eclipse.jetty.webapp.JettyWebXmlConfiguration", "org.eclipse.jetty.annotations.AnnotationConfiguration");
+        
         ((ServerConnector) server.getConnectors()[0]).setReuseAddress(true);
+        
         final File webappDir = new File(AisWebApp.class.getProtectionDomain().getCodeSource().getLocation().getFile());
         final WebAppContext webappContext = new WebAppContext(webappDir.getAbsolutePath(), "/");
         server.setHandler(webappContext);
+        
         server.start();
         server.join();
     }

@@ -23,9 +23,35 @@
 
 	<properties>
 		<dependencies.jetty.version>9.2.2.v20140723</dependencies.jetty.version>
+		<dependencies.jersey.version>2.11</dependencies.jersey.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${dependencies.servlet.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${dependencies.jersey.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.hk2.external</groupId>
+					<artifactId>javax.inject</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.glassfish.hk2.external</groupId>
+					<artifactId>aopalliance-repackaged</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-multipart</artifactId>
+			<version>${dependencies.jersey.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>dk.dma.commons</groupId>
 			<artifactId>dma-commons-app</artifactId>
@@ -39,6 +65,16 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
+			<version>${dependencies.jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-plus</artifactId>
+			<version>${dependencies.jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-annotations</artifactId>
 			<version>${dependencies.jetty.version}</version>
 		</dependency>
 		<dependency>
@@ -165,4 +201,5 @@
 			<url>http://repository-dma.forge.cloudbees.com/release/</url>
 		</repository>
 	</repositories>
+
 </project>
