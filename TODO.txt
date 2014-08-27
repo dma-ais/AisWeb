@@ -1,6 +1,7 @@
 + Look into rest proxy options
 	https://github.com/mitre/HTTP-Proxy-Servlet
 	Could use maven properties to put into web.xml (separate project)
+	http://devnote.stokemaster.com/2014/06/avoiding-cors-via-simple-nodejs-proxy.html
 
 + Look into simple web framework (we need to be able to configure rest urls)
 
