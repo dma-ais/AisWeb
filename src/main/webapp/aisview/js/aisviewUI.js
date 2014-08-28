@@ -941,8 +941,10 @@ function updateVesselDetails(vesselId){
 			id: vesselId
 		}, function(result) {			
 			// Load and draw tracks
-			var tracks = result.pastTrack.points;
-			drawPastTrack(tracks);			
+			if (result.pastTrack) {
+				var tracks = result.pastTrack.points;
+				drawPastTrack(tracks);			
+			}
 
 			// Load details
 			$("#detailsContainer").html("");
