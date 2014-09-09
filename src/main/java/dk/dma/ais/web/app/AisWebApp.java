@@ -46,8 +46,17 @@ public class AisWebApp extends AbstractDaemon {
         
         ((ServerConnector) server.getConnectors()[0]).setReuseAddress(true);
         
-        final File webappDir = new File(AisWebApp.class.getProtectionDomain().getCodeSource().getLocation().getFile());
-        final WebAppContext webappContext = new WebAppContext(webappDir.getAbsolutePath(), "/");
+        final WebAppContext webappContext = new WebAppContext();
+        webappContext.setContextPath("/");
+        
+        String runFromIde = System.getProperty("runFromIde"); 
+        if (runFromIde != null && runFromIde.equalsIgnoreCase("true")) {
+            webappContext.setWar("src/main/webapp");
+            webappContext.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",".*/classes/.*");
+        } else {
+            webappContext.setWar(new File(AisWebApp.class.getProtectionDomain().getCodeSource().getLocation().getFile()).getAbsolutePath());
+        }
+        webappContext.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
         server.setHandler(webappContext);
         
         server.start();
