@@ -26,14 +26,13 @@ function urlBuilder($scope,UrlService) {
             requestString = base+
                 UrlService.fromDate+
                 UrlService.toDate+
+                "filter="+
                 UrlService.sourceFiltering+
-                UrlService.mmsi+
+                UrlService.targetFilter+
                 UrlService.area+
-                //UrlService.timeZone+
                 UrlService.tables+
                 UrlService.separator+
                 UrlService.header;
-                //UrlService.samples;
 
         }
         else {
