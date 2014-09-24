@@ -3,7 +3,9 @@
 //
 
 //Root domain for request url
-var requestDomain = 'http://placeholder/';
+//var requestDomain = 'http://placeholder/';
+//default server
+var requestDomain = 'http://localhost:8090/';
 
 //query endpoint
 var queryEndpoint = '/store/query?';
