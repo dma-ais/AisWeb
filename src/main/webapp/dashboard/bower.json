@@ -5,7 +5,12 @@
   "homepage": "https://github.com/dma-ais/AisWeb",
   "license": "APACHE",
   "dependencies": {
-    "angular-bootstrap": "~0.11.1"
+    "angular-loader": "1.2.x",
+    "angular-mocks": "~1.2.x",
+    "angular-route": "1.2.x",
+    "angular-ui-bootstrap-complete": "~0.6.0",
+    "bootstrap-css": "~3.2.0",
+    "html5-boilerplate": "~4.3.0"
   },
   "authors": [
     "DMA <>"

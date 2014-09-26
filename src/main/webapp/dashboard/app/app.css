@@ -28,3 +28,6 @@
   content: "";
   padding: 0;
 }
+
+/* angular bootstrap */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

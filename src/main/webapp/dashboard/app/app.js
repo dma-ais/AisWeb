@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 var app = angular.module('dashboardApp', [
   'ngRoute',
+  'ui.bootstrap',
   'dashboardApp.aisview',
   'dashboardApp.aisstore',
   'dashboardApp.version'

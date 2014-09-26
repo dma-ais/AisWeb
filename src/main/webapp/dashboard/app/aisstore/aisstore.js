@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dashboardApp.aisstore', ['ngRoute'])
+angular.module('dashboardApp.aisstore', ['ngRoute', 'ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/aisstore', {
@@ -34,15 +34,23 @@ angular.module('dashboardApp.aisstore', ['ngRoute'])
 .controller('AisStoreCtrl', function($scope, AisStoreService) {
 	$scope.ping = 'no ping yet';
 
-	$scope.count = {second: -1}
+	$scope.stats =  [
+    	{ type: 'success', msg: 'Well done! You successfully read this important alert message.' }
+    ]
 
 	AisStoreService.ping().success(function(data) {
-		$scope.ping = data;
+		$scope.stats.push({type: 'success', msg: 'AisStore responded with: '+data});
 	});
 
 	AisStoreService.count('second').success(function(data) {
-		$scope.count['second'] = data;
+		$scope.stats.push({type: 'success', msg: 'Current packets/second: '+data});
 	});
+
+
+	$scope.closeAlert = function(index) {
+    	$scope.stats.splice(index, 1);
+    }
+ 
 
 });
 
