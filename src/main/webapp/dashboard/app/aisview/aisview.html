@@ -1,1 +1,19 @@
-<p>This is the partial for view 1.</p>
+<div ng-controller="AisViewCtrl" class="well">
+    <h2>Live AIS statistics</h2>
+	<h3>Area: {{areaPresets[preset].name}}. Vessel Statistics (Bounding Box: {{areaPresets[preset].box}})</h3>
+
+    <div class="btn-group">
+        <label class="btn btn-primary" ng-model="radioModel" ng-repeat="(k,preset) in areaPresets" ng-click='drawPreset(k)'>{{preset.name}}<label>
+    </div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div ng-repeat="pie in pies" ui-chart="pie.data" chart-options="pie.options" ></div>
+		</div>
+		<div class="col-md-6">
+			<div ng-repeat="bar in bars" ui-chart="bar.data" chart-options="bar.options" ></div>
+		</div>
+	</div>
+
+
+</div>

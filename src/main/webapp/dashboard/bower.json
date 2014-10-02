@@ -10,7 +10,9 @@
     "angular-route": "1.2.x",
     "angular-ui-bootstrap-complete": "~0.6.0",
     "bootstrap-css": "~3.2.0",
-    "html5-boilerplate": "~4.3.0"
+    "html5-boilerplate": "~4.3.0",
+    "angular-ui-chart": "~0.0.1",
+    "jquery": "~2.1.1"
   },
   "authors": [
     "DMA <>"

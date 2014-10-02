@@ -1,3 +1,5 @@
-<p>AisStore Stats</p>
-<alert ng-repeat="stat in stats" type="{{stat.type}}" close="closeAlert($index)">{{stat.msg}}</alert>
+<div ng-controller="AisStoreCtrl" class="well">
+	<p>AisStore Stats</p>
+	<alert ng-repeat="stat in stats" type="{{stat.type}}" close="closeAlert($index)">{{stat.msg}}</alert>
+</div>
 
