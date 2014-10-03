@@ -100,7 +100,7 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
 
     .controller('AisViewCtrl', function ($scope, AisViewService, charting) {
         $scope.fastestVessel = [0, []];
-        $scope.areaLargePresets = {
+        $scope.areaPresets = {
             'DNK': {
                 name: "Denmark", box: "53.583,4.517,64.0,18.0", size:"large"
             },
