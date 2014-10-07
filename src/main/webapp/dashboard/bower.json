@@ -13,7 +13,8 @@
     "html5-boilerplate": "~4.3.0",
     "angular-ui-chart": "~0.0.1",
     "jquery": "~2.1.1",
-    "angular-bootstrap": "~0.11.2"
+    "angular-bootstrap": "~0.11.2",
+    "angular-google-maps": "~1.2.4"
   },
   "authors": [
     "DMA <>"

@@ -5,6 +5,7 @@ var app = angular.module('dashboardApp', [
   'ngRoute',
   'ui.bootstrap',
   'ui.chart',
+  'google-maps',
   'dashboardApp.aisview',
   'dashboardApp.aisstore',
   'dashboardApp.version'

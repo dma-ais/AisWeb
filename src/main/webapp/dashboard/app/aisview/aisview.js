@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dashboardApp.aisview', ['ui.chart'])
+angular.module('dashboardApp.aisview', ['ui.chart', 'google-maps'])
 
     .value('charting', {
         pieChartOptions: {
@@ -169,7 +169,13 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
             ], options: charting.barChartOptions}
         }
 
-
+        $scope.map = {
+            center: {
+                latitude: 56,
+                longitude: 12
+            },
+            zoom: 8
+        };
     });
 
 //works when requesting just one column

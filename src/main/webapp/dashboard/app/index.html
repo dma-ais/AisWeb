@@ -1,90 +1,96 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="dashboardApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="dashboardApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="dashboardApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="dashboardApp" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html lang="en" ng-app="dashboardApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="dashboardApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="dashboardApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="dashboardApp" class="no-js"> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AisWeb Dashboard</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
-  <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.css"/>
-  <link rel="stylesheet" href="bower_components/jqplot/jquery.jqplot.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AisWeb Dashboard</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.css"/>
+    <link rel="stylesheet" href="bower_components/jqplot/jquery.jqplot.css"/>
 
 
-  <link rel="stylesheet" href="app.css"/>
-  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+    <link rel="stylesheet" href="app.css"/>
+    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">AisWeb Dashboard</a>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">AisWeb Dashboard</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Profile</a></li>
-      </ul>
-    </div>
-  </div>
 </div>
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-      <ul class="nav nav-sidebar">
-        <li><a href="#">AisAbnormal</a></li>
-        <li><a href="#">AisView</a></li>
-        <li><a href="#">AisStore</a></li>
-        <li><a href="#">AisCoverage</a></li>
-      </ul>
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar voffset5">
+            <ul class="nav nav-sidebar">
+                <li><a href="#">AisAbnormal</a></li>
+                <li><a href="#">AisView</a></li>
+                <li><a href="#">AisStore</a></li>
+                <li><a href="#">AisCoverage</a></li>
+            </ul>
+        </div>
+        <!-- CONTENT page, add dashboard elements here -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="DashboardCtrl">
+
+            <div ng-repeat="view in views">
+                <ng-include src="view.url"></ng-include>
+            </div>
+        </div>
     </div>
-    <!-- CONTENT page, add dashboard elements here -->
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="DashboardCtrl">
-      
-      <div ng-repeat="view in views" >
-        <ng-include src="view.url"></ng-include>
-      </div>
-    </div>
-  </div>
 </div>
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
 
-  
-  <script src="bower_components/jquery/dist/jquery.js"></script>
-  <script src="bower_components/jqplot/jquery.jqplot.js"></script>
-  <script src="bower_components/jqplot/plugins/jqplot.pieRenderer.js"></script>
-  <script src="bower_components/jqplot/plugins/jqplot.barRenderer.js"></script>
-  <script src="bower_components/jqplot/plugins/jqplot.categoryAxisRenderer.js"></script>
-  
-  
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-ui-chart/src/chart.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/jqplot/jquery.jqplot.js"></script>
+<script src="bower_components/jqplot/plugins/jqplot.pieRenderer.js"></script>
+<script src="bower_components/jqplot/plugins/jqplot.barRenderer.js"></script>
+<script src="bower_components/jqplot/plugins/jqplot.categoryAxisRenderer.js"></script>
 
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-chart/src/chart.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
-  <script src="app.js"></script>
-  <script src="aisview/aisview.js"></script>
-  <script src="aisstore/aisstore.js"></script>
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
+<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+<script src='bower_components/lodash/dist/lodash.underscore.min.js'></script>
+<script src='bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
+
+<script src="app.js"></script>
+<script src="aisview/aisview.js"></script>
+<script src="aisstore/aisstore.js"></script>
+<script src="components/version/version.js"></script>
+<script src="components/version/version-directive.js"></script>
+<script src="components/version/interpolate-filter.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 	<h3>Area: {{areaPresets[preset].name}}. Vessel Statistics (Bounding Box: {{areaPresets[preset].box}})</h3>
 
     <div class="btn-group">
-        <label class="btn btn-primary" ng-model="radioModel" ng-repeat="(k,preset) in areaPresets" ng-click='drawPreset(k)'>{{preset.name}}<label>
+        <label class="btn btn-primary" ng-model="radioModel" ng-repeat="(k,preset) in areaPresets" ng-click='drawPreset(k)'>{{preset.name}}</label>
     </div>
 
 	<div class="row">
@@ -12,8 +12,8 @@
 		</div>
 		<div class="col-md-6">
 			<div ng-repeat="bar in bars" ui-chart="bar.data" chart-options="bar.options" ></div>
-		</div>
-	</div>
-
-
+            <google-map id="abnormal-overview-map" center="map.center" zoom="map.zoom"></google-map>
+        </div>
+    </div>
 </div>
+
