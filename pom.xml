@@ -101,6 +101,9 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <workingDirectory>src/main/webapp/dashboard</workingDirectory>
+                            <environmentVariables>
+                                <PATH>${PATH}:/scratch/jenkins/addons/node/node-0.11.12-x86_64/bin</PATH>
+                            </environmentVariables>
                             <executable>npm</executable>
                             <arguments>
                                 <argument>install</argument>
