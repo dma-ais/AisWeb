@@ -49,3 +49,8 @@
     /*width: 350px;*/
     height: 350px;
 }
+
+/* Do not display missing OpenLayers tiles */
+.olImageLoadError {
+    display: none !important;
+}
