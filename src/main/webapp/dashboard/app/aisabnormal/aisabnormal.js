@@ -9,7 +9,29 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
         });
     }])
 
-    .controller('AisAbnormalCtrl', function ($scope) {
+    .service('AisAbnormalService', function ($http) {
+        this.getParams = function (params) {
+            var qParams = [];
+            if (params != null) {
+                angular.forEach(params, function (val, key) {
+                    var result = key + "=" + encodeURIComponent(val);
+                    qParams.push(result);
+                });
+            }
+            return qParams.join("&");
+        }
+
+        this.ping = function () {
+            return $http.get("/service/ping");
+        };
+
+        this.recent_events = function (params) {
+            var url = "/service/recent_events?" + this.getParams(params);
+            return $http.get(url);
+        };
+    })
+
+    .controller('AisAbnormalCtrl', ['$scope', '$interval', 'AisAbnormalService', function ($scope, $interval, AisAbnormalService) {
         $scope.map = {
             center: {
                 latitude: 56,
@@ -19,7 +41,19 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
         };
 
         drawOpenSeaMap();
-    });
+
+        $interval(function() {
+            // TODO load recent abnormal events
+            AisAbnormalService
+                .ping()
+                .success(function (data) {
+                    console.log("CHECK");
+                })
+                .error(function(data, status, headers, config) {
+                    console.log("ERROR " + status);
+                });
+        }, 1000);
+    }]);
 
 var openLayersMap;
 
