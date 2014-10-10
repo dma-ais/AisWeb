@@ -26,38 +26,55 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
         };
 
         this.recent_events = function (params) {
-            var url = "/service/recent_events?" + this.getParams(params);
+            var url = "///localhost:8081/abnormal/rest/event?" + this.getParams(params);
             return $http.get(url);
         };
     })
 
     .controller('AisAbnormalCtrl', ['$scope', '$interval', 'AisAbnormalService', function ($scope, $interval, AisAbnormalService) {
-        $scope.map = {
-            center: {
-                latitude: 56,
-                longitude: 12
-            },
-            zoom: 8
-        };
+            $scope.map = {
+                center: {
+                    latitude: 56,
+                    longitude: 12
+                },
+                zoom: 8
+            };
 
-        drawOpenSeaMap();
+        initOpenSeaMap();
 
         $interval(function() {
             // TODO load recent abnormal events
             AisAbnormalService
-                .ping()
+                .recent_events({numberOfRecentEvents: 5})
                 .success(function (data) {
-                    console.log("CHECK");
+                    updateAbnormalBehavioursOnMap(data);
                 })
                 .error(function(data, status, headers, config) {
-                    console.log("ERROR " + status);
+                    console.log("ERROR: Could not reach Abnormal Behaviour web services: " + status);
                 });
-        }, 1000);
+        }, 5000);
     }]);
 
 var openLayersMap;
 
-function drawOpenSeaMap() {
+function updateAbnormalBehavioursOnMap(events) {
+    events.forEach(function(event) {
+        var behaviours = event.behaviours;
+        behaviours.forEach(function(behaviour) {
+            if (behaviour.primary) {
+                var tp = behaviour.trackingPoints[behaviour.trackingPoints.length-1];
+                var lat = tp.latitude;
+                var lon = tp.longitude;
+                var desc = event.description;
+                console.log("add event to map: " + lat + " " + lon + " " + desc);
+            }
+        });
+    });
+}
+
+var openLayersMap;
+
+function initOpenSeaMap() {
     openLayersMap = new OpenLayers.Map("openlayers-map", {
         projection: new OpenLayers.Projection("EPSG:900913"),
         displayProjection: new OpenLayers.Projection("EPSG:4326"),
