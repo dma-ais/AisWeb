@@ -22,11 +22,11 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
         }
 
         this.ping = function () {
-            return $http.get("/service/ping");
+            return $http.get("/abnormal/ping");
         };
 
         this.recent_events = function (params) {
-            var url = "abnormal/rest/event?" + this.getParams(params);
+            var url = "/abnormal/rest/event?" + this.getParams(params);
             return $http.get(url);
         };
     })
