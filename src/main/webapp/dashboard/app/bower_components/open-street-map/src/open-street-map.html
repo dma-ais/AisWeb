@@ -1,0 +1,291 @@
+<!--
+Copyright 2014 Simon Ser
+Use of this source code is governed by a MIT-style
+license that can be found in the LICENSE file.
+-->
+
+<polymer-element name="open-street-map" attributes="lat lng zoom showCenterMarker zoomable version">
+  <template>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css">
+
+    <style>
+
+      :host {
+        position: relative;
+        display: block;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+    </style>
+
+    <div id="map"></div>
+    
+    <content id="markers" select="open-street-map-marker"></content>
+
+  </template>
+  <script>
+    (function (global) {
+      Polymer('open-street-map', {
+        /**
+         * A latitude to center the map on.
+         *
+         * @attribute lat
+         * @type number
+         * @default 37.77493
+         */
+        lat: 37.77493,
+        /**
+         * A longitude to center the map on.
+         *
+         * @attribute lng
+         * @type number
+         * @default -122.41942
+         */
+        lng: -122.41942,
+        /**
+         * A zoom level to set the map to.
+         *
+         * @attribute zoom
+         * @type number
+         * @default 10
+         */
+        zoom: 10,
+        /**
+         * When set, displays a map marker at the center point.
+         *
+         * @attribute showCenterMarker
+         * @type boolean
+         * @default false
+         */
+        showCenterMarker: false,
+        /**
+         * If false, prevent the user from zooming the map interactively.
+         *
+         * @attribute zoomable
+         * @type boolean
+         * @default true
+         */
+        zoomable: true,
+        /**
+         * If false, prevent the user from dragging the map interactively.
+         *
+         * @attribute draggable
+         * @type boolean
+         * @default true
+         */
+        draggable: true,
+
+        /**
+         * Version of the Leaflet API to use.
+         *
+         * @attribute version
+         * @type string
+         * @default '0.7.3'
+         */
+        version: '0.7.3',
+
+        apiUrl: 'http://cdn.leafletjs.com/leaflet-%%version%%/leaflet-src.js',
+
+        /**
+         * URL for tiles.
+         *
+         * @attribute tilesUrl
+         * @type string
+         * @default 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+         */
+        tilesUrl: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+
+        observe: {
+          lat: 'updateCenter',
+          lng: 'updateCenter'
+        },
+
+        created: function() {
+          this.markers = [];
+        },
+
+        attached: function() {
+          this.resize();
+        },
+
+        ready: function () {
+          var that = this;
+
+          var applyMacro = function (url) {
+            return url.replace('%%version%%', that.version);
+          };
+
+          // Load the API
+          var src = applyMacro(this.apiUrl);
+
+          var script = document.createElement('script');
+          script.onload = this.mapApiLoaded.bind(this);
+          //script.onerror = this.error.bind(this);
+          script.src = src;
+          var s = document.querySelector('script');
+          s.parentNode.insertBefore(script, s);
+          this.script = script;
+        },
+        
+        mapApiLoaded: function() {
+          var mapOptions = {
+            zoom: this.zoom,
+            lat: this.lat,
+            lng: this.lng,
+            disableDefaultUI: this.disableDefaultUI,
+            zoomable: this.zoomable,
+            draggable: this.draggable
+          };
+
+          // Only override the default if set.
+          // We use getAttribute here because the default value of this.draggable = false even when not set.
+          //if (this.getAttribute("draggable") != null) {
+          //  mapOptions.draggable = this.draggable;
+          //}
+
+          var map = this.map = L.map(this.$.map, {
+            center: [mapOptions.lat, mapOptions.lng],
+            zoom: mapOptions.zoom,
+            dragging: mapOptions.draggable,
+            touchZoom: mapOptions.zoomable,
+            scrollWheelZoom: mapOptions.zoomable,
+            doubleClickZoom: mapOptions.zoomable,
+            boxZoom: mapOptions.zoomable
+          });
+
+          L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+            maxZoom: 18
+          }).addTo(map);
+
+          this.updateCenter();
+          //this.updateMarkers();
+
+          this.fire('open-street-map-ready');      
+        },
+
+        updateMarkers: function() {
+          this.markers = Array.prototype.slice.call(
+              this.$.markers.getDistributedNodes());
+          
+          this.onMutation(this, this.updateMarkers); // Watch for future updates.
+
+          // Set the map on each marker and zoom viewport to ensure they're in view. 
+          if (this.markers.length && this.map) {
+            for (var i = 0, m; m = this.markers[i]; ++i) {
+              m.map = this.map;
+            }
+
+            if (this.fitToMarkers) {
+              this.fitToMarkersChanged();
+            }
+          }
+        },
+
+        /**
+         * Clears all markers from the map.
+         *
+         * @method clear
+         */
+        clear: function() {
+          for (var i = 0, m; m = this.markers[i]; ++i) {
+            m.marker.setMap(null);
+          }
+        },
+        
+        resize: function() {
+          if (this.map) {
+            //google.maps.event.trigger(this.map, 'resize');
+            this.updateCenter();
+          }
+        },
+        
+        updateCenter: function() {
+          if (!this.map || this.lat == null || this.lng == null ||
+              typeof this.lat === 'object' || 
+              typeof this.lng === 'object') {
+            return;
+          }
+          this.map.setView([this.lat, this.lng]);
+          //this.showCenterMarkerChanged();
+        },
+        
+        zoomChanged: function() {
+          if (this.map) {
+            this.map.setZoom(Number(this.zoom));
+          }
+        },
+        
+        showCenterMarkerChanged: function() {
+          if (!this.map) {
+            return;
+          }
+          if (!this.centerMarker && this.showCenterMarker) {
+            this.centerMarker = new google.maps.Marker({
+              map: this.map
+            });
+          }
+          if (this.centerMarker) {
+            this.centerMarker.setPosition(this.map.getCenter());
+            this.centerMarker.setMap(this.showCenterMarker ? this.map : null);
+          }
+        },
+        
+        disableDefaultUIChanged: function() {
+          if (!this.map) {
+            return;
+          }
+          this.map.setOptions({disableDefaultUI: this.disableDefaultUI});
+        },
+
+        zoomableChanged: function() {
+          if (!this.map) {
+            return;
+          }
+          this.map.setOptions({
+            disableDoubleClickZoom: !this.zoomable,
+            scrollwheel: this.zoomable
+          });
+        },
+
+        attributeChanged: function(attrName, oldVal, newVal) {
+          if (!this.map) {
+            return;
+          }
+          // Cannot use *Changed watchers for native properties.
+          switch (attrName) {
+            case 'draggable':
+              this.map.setOptions({draggable: this.draggable});
+              break;
+          }
+        },
+
+        fitToMarkersChanged: function() {
+          // TODO(ericbidelman): respect user's zoom level.
+
+          if (this.map && this.fitToMarkers) { 
+            var latLngBounds = new google.maps.LatLngBounds();
+            for (var i = 0, m; m = this.markers[i]; ++i) {
+              latLngBounds.extend(
+                  new google.maps.LatLng(m.latitude, m.longitude));
+            }
+
+            // For one marker, don't alter zoom, just center it.
+            if (this.markers.length > 1) {
+              this.map.fitBounds(latLngBounds);
+            }
+            
+            this.map.setCenter(latLngBounds.getCenter());
+          }
+        }
+      });
+    })(window);
+  </script>
+</polymer-element>

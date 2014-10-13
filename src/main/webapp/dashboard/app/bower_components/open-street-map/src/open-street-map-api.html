@@ -1,0 +1,122 @@
+<polymer-element name="open-street-map-api" attributes="version notifyEvent">
+<script>
+(function () {
+  Polymer('open-street-map-api', {
+
+    defaultUrl: 'http://cdn.leafletjs.com/leaflet-%%version%%/leaflet.js',
+
+    /**
+     * Version of the Leaflet API to use.
+     *
+     * @attribute version
+     * @type string
+     * @default '0.7.3'
+     */
+    version: '0.7.3',
+
+    notifyEvent: 'api-load',
+
+    ready: function() {
+      var url = this.defaultUrl.replace('%%version%%', this.version);
+console.log(url);
+      this.url = url;
+    },
+
+    urlChanged: function() {
+      require(this.url, this);
+    },
+
+    provide: function() {
+      this.async('notify');
+    },
+    
+    notify: function() {
+      this.fire(this.notifyEvent, arguments);
+    },
+
+    /**
+     * Provides the Leaflet JS API namespace.
+     *
+     * @property api
+     * @type Leaflet
+     */
+    api: function() {
+      return Leaflet;
+    }
+  });
+
+  function require(url, notifiee) {
+    // make hashable string form url
+    var name = nameFromUrl(url);
+    // lookup existing loader instance
+    var loader = apiMap[name];
+    // create a loader as needed
+    if (!loader) {
+      loader = apiMap[name] = new Loader(name, url);
+    }
+    loader.requestNotify(notifiee);
+  }
+  
+  function nameFromUrl(url) {
+    return url.replace(/[\:\/\%\?\&\.\=\-]/g, '_') + '_api';
+  }
+
+  var Loader = function(name, url) {
+    this.instances = [];
+
+    this.addScript(url);
+  };
+  
+  Loader.prototype = {
+
+    loaded: false,
+    
+    addScript: function(src) {
+      var script = document.createElement('script');
+      script.onload = this.success.bind(this);
+      script.onerror = this.error.bind(this);
+      script.src = src;
+      var s = document.querySelector('script');
+      s.parentNode.insertBefore(script, s);
+      this.script = script;
+    },
+    
+    removeScript: function() {
+      if (this.script.parentNode) {
+        this.script.parentNode.removeChild(this.script);
+      }
+      this.script = null;
+    },
+    
+    error: function() {
+      this.cleanup();
+    },
+    
+    success: function() {
+      this.loaded = true;
+      this.cleanup();
+      this.result = Array.prototype.slice.call(arguments);
+      this.instances.forEach(this.provide, this);
+      this.instances = null;
+    },
+    
+    cleanup: function() {
+      delete window[this.callbackName];
+    },
+
+    provide: function(instance) {
+      instance.notify(instance, this.result);
+    },
+    
+    requestNotify: function(instance) {
+      if (this.loaded) {
+        this.provide(instance);
+      } else {
+        this.instances.push(instance);
+      }
+    }
+    
+  };
+});
+</script>
+</polymer-element>

@@ -1,0 +1,30 @@
+{
+  "name": "angular-ui-bootstrap-complete",
+  "version": "0.6.0",
+  "description": "AngularJS UI Bootstrap with optional default template injection",
+  "keywords": [
+    "angular",
+    "angular-ui-bootstrap",
+    "angular-ui",
+    "angularjs",
+    "bootstrap",
+    "template",
+    "templates",
+    "ui-bootstrap"
+  ],
+  "main": [
+    "./ui-bootstrap-tpls.js",
+    "./ui-bootstrap.js"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/datapad/bower-angular-ui-bootstrap-complete",
+  "_release": "0.6.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.6.0",
+    "commit": "205fbba98d723016c39e27f3dce2f93ac0c4996c"
+  },
+  "_source": "git://github.com/datapad/bower-angular-ui-bootstrap-complete.git",
+  "_target": "~0.6.0",
+  "_originalSource": "angular-ui-bootstrap-complete"
+}

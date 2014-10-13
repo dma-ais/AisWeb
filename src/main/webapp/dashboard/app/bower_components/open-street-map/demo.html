@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <title>open-street-map</title>
+  <meta charset="utf-8">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/polymer/0.2.2/platform.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/polymer/0.2.2/polymer.js"></script>
+  
+  <link rel="import" href="src/open-street-map-api.html">
+  <link rel="import" href="src/open-street-map.html">
+
+  <style>
+    open-street-map {
+      width: 400px;
+      height: 400px;
+      background-color: palegoldenrod;
+    }
+
+    input[type=number] {
+      width: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>open-street-map</h1>
+
+<template id="tpl" bind>
+  <div>
+    <label>Lat: <input type="number" value="{{ lat }}" step="any"></label>
+    <label>Lng: <input type="number" value="{{ lng }}" step="any"></label>
+    <label>Zoom: <input type="number" value="{{ zoom }}"></label>
+  </div>
+  <open-street-map lat="{{ lat }}" lng="{{ lng }}" zoom="{{ zoom }}"></open-street-map>
+</template>
+
+<script>
+  window.addEventListener('polymer-ready', function() {
+    document.getElementById('tpl').model = {
+      zoom: 10,
+      width: 390,
+      height: 390
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "angular-ui-bootstrap-complete",
+  "version": "0.6.0",
+  "description": "AngularJS UI Bootstrap with optional default template injection",
+  "keywords": [
+    "angular",
+    "angular-ui-bootstrap",
+    "angular-ui",
+    "angularjs",
+    "bootstrap",
+    "template",
+    "templates",
+    "ui-bootstrap"
+  ],
+  "main": [  "./ui-bootstrap-tpls.js", "./ui-bootstrap.js" ],
+  "license": "MIT"
+}

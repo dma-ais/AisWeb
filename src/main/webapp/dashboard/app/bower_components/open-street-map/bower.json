@@ -1,0 +1,24 @@
+{
+  "name": "open-street-map",
+  "version": "0.0.4",
+  "homepage": "https://github.com/emersion/polymer-openstreetmap",
+  "authors": [
+    "Simon Ser <contact@emersion.fr>"
+  ],
+  "description": "Polymer Element that displays an interactive map (using OpenStreetMap) of of a set of geographic coordinates",
+  "main": "src/openstreetmap.html",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "openstreetmap"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer"
+  }
+}
