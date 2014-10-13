@@ -12,12 +12,12 @@ angular.module('dashboardApp.aisstore', ['ngRoute', 'ui.bootstrap'])
 
 .service('AisStoreService', function($http) {
 	this.ping = function() {
-		return $http.get("/service/store/ping");
+		return $http.get("/aissview/rest/store/ping");
 	};
 
 
 	this.count = function(interval) {
-		var url = "/service/store/count/";
+		var url = "/aisview/rest/store/count/";
 		switch (interval) {
 	    case "second":
 		case "minute":

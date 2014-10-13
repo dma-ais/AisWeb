@@ -26,7 +26,7 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
         };
 
         this.recent_events = function (params) {
-            var url = "///localhost:8081/abnormal/rest/event?" + this.getParams(params);
+            var url = "abnormal/rest/event?" + this.getParams(params);
             return $http.get(url);
         };
     })

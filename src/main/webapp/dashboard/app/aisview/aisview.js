@@ -66,32 +66,32 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
 
 
         this.ping = function () {
-            return $http.get("/service/ping");
+            return $http.get("/aisview/rest/ping");
         };
 
 
         this.vessel_list = function (params) {
-            var url = "/service/vessel_list?" + this.getParams(params);
+            var url = "/aisview/rest/vessel_list?" + this.getParams(params);
             return $http.get(url);
         };
 
         this.tracker_packets = function (params) {
-            var url = "/service/tracker/packets/json/?" + this.getParams(params);
+            var url = "/aisview/rest/tracker/packets/json/?" + this.getParams(params);
             return $http.get(url);
         }
 
         this.tracker_dynamic = function (params) {
-            var url = "/service/tracker/dynamic/?" + this.getParams(params);
+            var url = "/aisview/rest/tracker/dynamic/?" + this.getParams(params);
             return $http.get(url);
         }
 
         this.tracker_static = function (params) {
-            var url = "/service/tracker/static/?" + this.getParams(params);
+            var url = "/aisview/rest/tracker/static/?" + this.getParams(params);
             return $http.get(url);
         }
 
         this.tracker_packets = function (params) {
-            var url = "/service/tracker/packets/?" + this.getParams(params);
+            var url = "/aisview/rest/tracker/packets/?" + this.getParams(params);
             return $http.get(url);
         }
 
@@ -105,10 +105,6 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
             },
             'GREENLAND': {
                 name: "Greenland+Iceland", box: "84,-74,58,-10", size:"large"
-            },
-
-            'WORLD': {
-                name: "World Wide", box: "-90,-180,90,180", size: "large"
             },
 
             'NUUK': {
