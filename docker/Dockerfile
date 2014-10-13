@@ -3,6 +3,6 @@ RUN wget --progress=dot:mega "https://dma.ci.cloudbees.com/job/AisWeb/lastSucces
 RUN unzip /archive.zip -d /
 RUN (cd /archive/src/main/webapp/dashboard; bower --allow-root update)
 WORKDIR /archive/
-RUN mvn clean install
+RUN mvn install
 EXPOSE 8080
 CMD ["mvn", "jetty:run"]
