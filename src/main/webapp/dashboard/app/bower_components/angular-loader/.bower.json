@@ -10,7 +10,7 @@
   "_resolution": {
     "type": "version",
     "tag": "v1.2.26",
-    "commit": "705b7bc9c2bc9eccaf7632391cf64d2d3d359859"
+    "commit": "a90a91969628591d7d399dbc46c4c344f1c89938"
   },
   "_source": "git://github.com/angular/bower-angular-loader.git",
   "_target": "1.2.x",

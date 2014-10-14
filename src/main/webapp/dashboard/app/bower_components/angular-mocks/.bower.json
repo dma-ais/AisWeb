@@ -10,7 +10,7 @@
   "_resolution": {
     "type": "version",
     "tag": "v1.2.26",
-    "commit": "feb4a0ca44c073f44e91b08eed1e9d432c4e2abd"
+    "commit": "0eda339dd42aba2628586f39d4806bcfb57fd6f4"
   },
   "_source": "git://github.com/angular/bower-angular-mocks.git",
   "_target": "~1.2.x",

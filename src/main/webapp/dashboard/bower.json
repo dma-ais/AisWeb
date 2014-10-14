@@ -5,19 +5,18 @@
     "homepage": "https://github.com/dma-ais/AisWeb",
     "license": "APACHE",
     "dependencies": {
-    "angular-loader": "1.2.x",
-    "angular-mocks": "~1.2.x",
-    "angular-route": "1.2.x",
-    "angular-ui-bootstrap-complete": "~0.6.0",
-    "bootstrap-css": "~3.2.0",
-    "html5-boilerplate": "~4.3.0",
-    "angular-ui-chart": "~0.0.1",
-    "jquery": "~2.1.1",
-    "angular-bootstrap": "~0.11.2",
-    "angular-google-maps": "~1.2.4",
-    "openlayers": "release-2.13.1",
-    "open-street-map": "~0.0.4"
-  },
+        "angular-loader": "1.2.x",
+        "angular-mocks": "~1.2.x",
+        "angular-route": "1.2.x",
+        "angular-ui-bootstrap-complete": "~0.6.0",
+        "bootstrap-css": "~3.2.0",
+        "html5-boilerplate": "~4.3.0",
+        "angular-ui-chart": "~0.0.1",
+        "jquery": "~2.1.1",
+        "angular-bootstrap": "~0.11.2",
+        "openlayers": "https://github.com/openlayers/ol3/releases/download/v3.0.0/v3.0.0.zip",
+        "angular-openlayers-directive": "https://raw.githubusercontent.com/tombatossals/angular-openlayers-directive/master/dist/angular-openlayers-directive.js"
+    },
   "authors": [
     "DMA <>"
   ],

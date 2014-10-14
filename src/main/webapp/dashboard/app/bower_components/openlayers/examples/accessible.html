@@ -1,167 +1,72 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <title>OpenLayers Accessible Example</title>
-        <link rel="stylesheet" href="../theme/default/style.css" type="text/css">
-        <link rel="stylesheet" href="style.css" type="text/css">
-        <style type="text/css">
-            table {
-                border: 1 px solid white;
-                padding: 0;
-            }
-            td {
-                text-align: center;
-            }
-            a {
-                text-decoration: none;
-                font-size: 1.2em;
-            }
-            a em {
-                font-style: normal;
-                font-weight: normal;
-                text-decoration: underline;
-            }
-            a:hover {
-                text-decoration: underline;
-            }
-            a.api {
-                font-size:1em;
-                text-decoration:underline;
-            }
-            a.accesskey {
-                color: white;
-            }
-            a.accesskey:focus {
-                color: #436976;
-            }
-            a.zoom {
-                padding-right: 20px;
-            }
-        </style>
-        <script src="../lib/OpenLayers.js"></script>
-        <script type="text/javascript">
-            var map = null;
-            function init(){
-                var options = {
-                    controls: [
-                        new OpenLayers.Control.KeyboardDefaults({
-                            observeElement: 'map'
-                        })
-                    ]
-                };
-                map = new OpenLayers.Map('map', options);
-                var wms = new OpenLayers.Layer.WMS(
-                    "OpenLayers WMS",
-                    "http://vmap0.tiles.osgeo.org/wms/vmap0?",
-                    {layers: 'basic'}
-                );
-                map.addLayer(wms);
-                map.zoomToMaxExtent();
-            }
-        </script>
-    </head>
-    <body onload="init()">
-        <h1 id="title">Accessible Example</h1>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="../css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../resources/layout.css" type="text/css">
+    <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap-responsive.min.css" type="text/css">
+    <title>Accessibility example</title>
+    <style>
+      a.skiplink {
+        position: absolute;
+        clip: rect(1px, 1px, 1px, 1px);
+        padding: 0;
+        border: 0;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+      }
+      a.skiplink:focus {
+        clip: auto;
+        height: auto;
+        width: auto;
+        background-color: #fff;
+        padding: 0.3em;
+      }
+    </style>
+  </head>
+  <body>
 
-        <div id="tags">
-            keyboard, pan, panning, zoom, zooming, accesskey
-        </div>        
-
-        <a class="accesskey"
-           href=""
-           accesskey="1"
-           onclick="document.getElementById('map').focus(); return false;">
-           Go to map
-        </a>
-
-        <p id="shortdesc">
-            Demonstrate the KeyboardDefaults control and how to use links
-            with Access Keys to navigate the map with the keyboard.
-        </p>
-
-        <a class="zoom"
-           href="javascript: void map.zoomIn();"
-           accesskey="i">
-            zoom <em>i</em>n</a>
-        <a class="zoom"
-           href="javascript: void map.zoomOut();"
-           accesskey="o">
-            zoom <em>o</em>ut</a>
-
-        <table>
-            <tbody>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>
-                        <a href="javascript: void map.pan(0, -map.getSize().h / 4);"
-                           accesskey="n">
-                            pan <em>n</em>orth
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="javascript: void map.pan(-map.getSize().w / 4, 0);"
-                           accesskey="w">
-                            pan <em>w</em>est
-                        </a>
-                    </td>
-                    <td id="map" class="smallmap" tabindex="0"></td>
-                    <td>
-                        <a href="javascript: void map.pan(map.getSize().w / 4, 0);"
-                           accesskey="e">
-                            pan <em>e</em>ast
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>
-                        <a href="javascript: void map.pan(0, map.getSize().h / 4);"
-                           accesskey="s">
-                            pan <em>s</em>outh
-                        </a>
-                    </td>
-                    <td>&nbsp;</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div id="docs">
-            <p>Navigate the map in one of three ways:</p>
-                <ol>
-                    <li>Use Access Key "1" (alt + 1) to focus the map element, and
-                        use following keys to pan and zoom:
-                        <ul>
-                            <li>+ (zoom in)</li>
-                            <li>- (zoom out)</li>
-                            <li>up-arrow (pan north)</li>
-                            <li>down-arrow (pan south)</li>
-                            <li>left-arrow (pan east)</li>
-                            <li>right-arrow (pan west)</li>
-                        </ul>
-                        See <a href=http://en.wikipedia.org/wiki/Access_key>wikipedia</a> for
-                        more detail about Access Keys.
-                    </li>
-                    <li>Navigate to pan and zoom links using the "tab" key, and
-                        press "enter" to pan and zoom</li>
-                    <li>If Access Keys work for links in your browser, use:
-                        <ul>
-                            <li>i (zoom in)</li>
-                            <li>o (zoom out)</li>
-                            <li>n (pan north)</li>
-                            <li>s (pan south)</li>
-                            <li>e (pan east)</li>
-                            <li>w (pan west)</li>
-                        </ul>
-                    </li>
-                </ol>
-            <p>
-
-            This is an example of using alternate methods to control panning and zooming.  This approach uses map.pan() and map.zoom().  You'll note that to pan, additional math is necessary along with map.size() in order to set the distance to pan.
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="./"><img src="../resources/logo.png" alt=""> OpenLayers 3 Examples</a>
         </div>
-    </body>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+
+      <div class="row-fluid">
+        <div class="span12">
+          <a class="skiplink" href="#map">Go to map</a>
+          <div id="map" class="map" tabindex="0"></div>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+
+        <div class="span12">
+          <h4 id="title">Accessibility example</h4>
+          <p id="shortdesc">Example of an accessible map.</p>
+          <div id="docs">
+            <p>This page's <code>map</code> element has its <code>tabindex</code> attribute set to <code>"0"</code>, that makes it focusable. To focus the map element you can either navigate to it using the "tab" key or use the skip link. When the <code>map</code> element is focused the + and - keys can be used to zoom in and out and the arrow keys can be used to pan.</p>
+            <p>When clicked the "Zoom in" and "Zoom out" buttons below the map zoom the map in and out, respectively. You can navigate to the buttons using the "tab" key, and press the "enter" key to trigger the zooming action.</p>
+            <p>See the <a href="accessible.js" target="_blank">accessible.js source</a> to see how this is done.</p>
+          </div>
+          <div id="tags">accessibility, tabindex</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="../resources/example-behaviour.js" type="text/javascript"></script>
+    <script src="loader.js?id=accessible" type="text/javascript"></script>
+
+  </body>
 </html>

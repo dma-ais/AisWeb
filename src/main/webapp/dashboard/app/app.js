@@ -5,7 +5,7 @@ var app = angular.module('dashboardApp', [
     'ngRoute',
     'ui.bootstrap',
     'ui.chart',
-    'google-maps',
+    'openlayers-directive',
     'dashboardApp.aisview',
     'dashboardApp.aisstore',
     'dashboardApp.aisabnormal',

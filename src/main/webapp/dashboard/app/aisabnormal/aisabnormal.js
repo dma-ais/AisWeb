@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dashboardApp.aisabnormal', ['google-maps'])
+angular.module('dashboardApp.aisabnormal', ['openlayers-directive'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/aisabnormal', {
@@ -38,7 +38,7 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
 
         this.events_last_24h = function () {
             var t1 = new Date();
-            var t0 = new Date(t1 - 24*60*60*1000);
+            var t0 = new Date(t1 - 24*60*60*1000 * 90 /* TODO */);
 
             var from = $filter('date')(t0, 'dd/MM/yyyy HH:mm');
             var to = $filter('date')(t1, 'dd/MM/yyyy HH:mm');

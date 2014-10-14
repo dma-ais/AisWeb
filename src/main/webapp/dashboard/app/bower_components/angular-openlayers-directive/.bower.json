@@ -1,0 +1,13 @@
+{
+  "name": "angular-openlayers-directive",
+  "_cacheHeaders": {
+    "ETag": "\"a8deb681b159c4e15d8afdd91fd07fdb02830c41\"",
+    "Content-Length": "28684",
+    "Content-Type": "text/plain; charset=utf-8"
+  },
+  "_release": "e-tag:a8deb681b",
+  "main": "index.js",
+  "_source": "https://raw.githubusercontent.com/tombatossals/angular-openlayers-directive/master/dist/angular-openlayers-directive.js",
+  "_target": "*",
+  "_originalSource": "https://raw.githubusercontent.com/tombatossals/angular-openlayers-directive/master/dist/angular-openlayers-directive.js"
+}

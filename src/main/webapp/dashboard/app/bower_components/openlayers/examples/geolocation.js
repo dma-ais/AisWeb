@@ -1,112 +1,56 @@
-var style = {
-    fillColor: '#000',
-    fillOpacity: 0.1,
-    strokeWidth: 0
-};
-
-var map = new OpenLayers.Map('map');
-var layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
-var vector = new OpenLayers.Layer.Vector('vector');
-map.addLayers([layer, vector]);
-
-map.setCenter(
-    new OpenLayers.LonLat(-71.147, 42.472).transform(
-        new OpenLayers.Projection("EPSG:4326"),
-        map.getProjectionObject()
-    ), 12
-);
-
-var pulsate = function(feature) {
-    var point = feature.geometry.getCentroid(),
-        bounds = feature.geometry.getBounds(),
-        radius = Math.abs((bounds.right - bounds.left)/2),
-        count = 0,
-        grow = 'up';
-
-    var resize = function(){
-        if (count>16) {
-            clearInterval(window.resizeInterval);
-        }
-        var interval = radius * 0.03;
-        var ratio = interval/radius;
-        switch(count) {
-            case 4:
-            case 12:
-                grow = 'down'; break;
-            case 8:
-                grow = 'up'; break;
-        }
-        if (grow!=='up') {
-            ratio = - Math.abs(ratio);
-        }
-        feature.geometry.resize(1+ratio, point);
-        vector.drawFeature(feature);
-        count++;
-    };
-    window.resizeInterval = window.setInterval(resize, 50, point, radius);
-};
-
-var geolocate = new OpenLayers.Control.Geolocate({
-    bind: false,
-    geolocationOptions: {
-        enableHighAccuracy: false,
-        maximumAge: 0,
-        timeout: 7000
-    }
+var view = new ol.View({
+  center: [0, 0],
+  zoom: 2
 });
-map.addControl(geolocate);
-var firstGeolocation = true;
-geolocate.events.register("locationupdated",geolocate,function(e) {
-    vector.removeAllFeatures();
-    var circle = new OpenLayers.Feature.Vector(
-        OpenLayers.Geometry.Polygon.createRegularPolygon(
-            new OpenLayers.Geometry.Point(e.point.x, e.point.y),
-            e.position.coords.accuracy/2,
-            40,
-            0
-        ),
-        {},
-        style
-    );
-    vector.addFeatures([
-        new OpenLayers.Feature.Vector(
-            e.point,
-            {},
-            {
-                graphicName: 'cross',
-                strokeColor: '#f00',
-                strokeWidth: 2,
-                fillOpacity: 0,
-                pointRadius: 10
-            }
-        ),
-        circle
-    ]);
-    if (firstGeolocation) {
-        map.zoomToExtent(vector.getDataExtent());
-        pulsate(circle);
-        firstGeolocation = false;
-        this.bind = true;
-    }
+
+var map = new ol.Map({
+  layers: [
+    new ol.layer.Tile({
+      source: new ol.source.OSM()
+    })
+  ],
+  target: 'map',
+  controls: ol.control.defaults({
+    attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+      collapsible: false
+    })
+  }),
+  view: view
 });
-geolocate.events.register("locationfailed",this,function() {
-    OpenLayers.Console.log('Location detection failed');
+
+var geolocation = new ol.Geolocation({
+  projection: view.getProjection()
 });
-document.getElementById('locate').onclick = function() {
-    vector.removeAllFeatures();
-    geolocate.deactivate();
-    document.getElementById('track').checked = false;
-    geolocate.watch = false;
-    firstGeolocation = true;
-    geolocate.activate();
-};
-document.getElementById('track').onclick = function() {
-    vector.removeAllFeatures();
-    geolocate.deactivate();
-    if (this.checked) {
-        geolocate.watch = true;
-        firstGeolocation = true;
-        geolocate.activate();
-    }
-};
-document.getElementById('track').checked = false;
+
+var track = new ol.dom.Input(document.getElementById('track'));
+track.bindTo('checked', geolocation, 'tracking');
+
+// update the HTML page when the position changes.
+geolocation.on('change', function() {
+  $('#accuracy').text(geolocation.getAccuracy() + ' [m]');
+  $('#altitude').text(geolocation.getAltitude() + ' [m]');
+  $('#altitudeAccuracy').text(geolocation.getAltitudeAccuracy() + ' [m]');
+  $('#heading').text(geolocation.getHeading() + ' [rad]');
+  $('#speed').text(geolocation.getSpeed() + ' [m/s]');
+});
+
+// handle geolocation error.
+geolocation.on('error', function(error) {
+  var info = document.getElementById('info');
+  info.innerHTML = error.message;
+  info.style.display = '';
+});
+
+var accuracyFeature = new ol.Feature();
+accuracyFeature.bindTo('geometry', geolocation, 'accuracyGeometry');
+
+var positionFeature = new ol.Feature();
+positionFeature.bindTo('geometry', geolocation, 'position')
+    .transform(function() {}, function(coordinates) {
+      return coordinates ? new ol.geom.Point(coordinates) : null;
+    });
+
+var featuresOverlay = new ol.FeatureOverlay({
+  map: map,
+  features: [accuracyFeature, positionFeature]
+});
