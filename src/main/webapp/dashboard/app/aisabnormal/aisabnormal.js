@@ -9,7 +9,7 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
         });
     }])
 
-    .service('AisAbnormalService', function ($http) {
+    .service('AisAbnormalService', function ($http, $filter) {
         this.getParams = function (params) {
             var qParams = [];
             if (params != null) {
@@ -25,8 +25,20 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
             return $http.get("/abnormal/ping");
         };
 
-        this.recent_events = function (params) {
-            var url = "http://localhost:8081/abnormal/rest/event?" + this.getParams(params);
+        this.recent_events = function (no_of_events) {
+            var url = "http://localhost:8081/abnormal/rest/event?" + this.getParams({numberOfRecentEvents: no_of_events});
+            return $http.get(url);
+        };
+
+        this.events_last_24h = function () {
+            var t1 = new Date();
+            var t0 = new Date(t1 - 24*60*60*1000);
+
+            var from = $filter('date')(t0, 'dd/MM/yyyy HH:mm');
+            var to = $filter('date')(t1, 'dd/MM/yyyy HH:mm');
+
+            var url = "http://localhost:8081/abnormal/rest/event?" + this.getParams({from: from, to: to});
+
             return $http.get(url);
         };
     })
@@ -35,7 +47,7 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
         $interval(function() {
             // TODO load recent abnormal events
             AisAbnormalService
-                .recent_events({numberOfRecentEvents: 5})
+                .events_last_24h()
                 .success(function (data) {
                     $scope.events = data;
                 })
