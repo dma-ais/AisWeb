@@ -9,6 +9,12 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
         });
     }])
 
+    .filter('unCamelCase', function() {
+        return function(camelCase) {
+            return camelCase.replace(/([A-Z])/g, ' $1').substr(1).replace(/ \w\S*/g, function(txt){return txt.substr(0).toLowerCase();});
+        };
+    })
+
     .service('AisAbnormalService', function ($http, $filter) {
         this.getParams = function (params) {
             var qParams = [];
@@ -19,7 +25,7 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
                 });
             }
             return qParams.join("&");
-        }
+        };
 
         this.ping = function () {
             return $http.get("/abnormal/ping");
@@ -44,15 +50,17 @@ angular.module('dashboardApp.aisabnormal', ['google-maps'])
     })
 
     .controller('AisAbnormalCtrl', ['$scope', '$interval', 'AisAbnormalService', function ($scope, $interval, AisAbnormalService) {
-        $interval(function() {
-            // TODO load recent abnormal events
+        this.load_and_show_recent_events = function() {
             AisAbnormalService
                 .events_last_24h()
                 .success(function (data) {
                     $scope.events = data;
+                    $scope.lastUpdate = new Date();
                 })
                 .error(function(data, status, headers, config) {
                     console.log("ERROR: Could not reach Abnormal Behaviour web services: " + status);
                 });
-        }, 5000);
+        };
+        this.load_and_show_recent_events();
+        $interval(this.load_and_show_recent_events, 5000);
     }]);

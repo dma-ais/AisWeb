@@ -1,9 +1,22 @@
 <div ng-controller="AisAbnormalCtrl" class="well">
     <h2>Recent abnormal events</h2>
+    <div>Last updated {{ lastUpdate | date:'dd/MM/yyyy HH:mm:ss' }}</div>
 	<div class="row voffset3">
 		<div class="col-md-6">
             <ol>
-                <li ng-repeat="event in events">{{event.id}}: {{event.description}}</li>
+                <li ng-repeat="event in events">
+                    <div>Event no. {{event.id}}</div>
+                    <div>
+                        {{event.eventType | unCamelCase }} concerning
+                        <span ng-repeat="behaviour in event.behaviours">
+                            {{behaviour.vessel.name}}{{$last ? '' : ', '}}
+                        </span>
+                    </div>
+                    <div>
+                        Raised {{ event.startTime | date:'dd/MM/yyyy HH:mm' }}
+                        {{event.endTime ? (', lowered ' + (event.endTime | date:'dd/MM/yyyy HH:mm')) : ''}}
+                    </div>
+                </li>
             </ol>
         </div>
         <div class="col-md-6">
