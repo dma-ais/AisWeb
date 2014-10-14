@@ -1,8 +1,10 @@
 <div ng-controller="AisAbnormalCtrl" class="well">
-    <h2>Live AIS behaviour</h2>
-	<div class="row">
+    <h2>Recent abnormal events</h2>
+	<div class="row voffset3">
 		<div class="col-md-6">
-            <div class="voffset3"><google-map id="abnormal-overview-map" class="voffset4" center="map.center" zoom="map.zoom" /></div>
+            <ol>
+                <li ng-repeat="event in events">{{event.id}}: {{event.description}}</li>
+            </ol>
         </div>
         <div class="col-md-6">
             <div class="voffset3"><div id="openlayers-map" /></div>
