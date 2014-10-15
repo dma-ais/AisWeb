@@ -32,7 +32,7 @@ angular.module('dashboardApp.aisabnormal', ['openlayers-directive'])
         };
 
         this.recent_events = function (no_of_events) {
-            var url = "http://localhost:8081/abnormal/rest/event?" + this.getParams({numberOfRecentEvents: no_of_events});
+            var url = "/abnormal/rest/event?" + this.getParams({numberOfRecentEvents: no_of_events});
             return $http.get(url);
         };
 
@@ -43,7 +43,7 @@ angular.module('dashboardApp.aisabnormal', ['openlayers-directive'])
             var from = $filter('date')(t0, 'dd/MM/yyyy HH:mm');
             var to = $filter('date')(t1, 'dd/MM/yyyy HH:mm');
 
-            var url = "http://localhost:8081/abnormal/rest/event?" + this.getParams({from: from, to: to});
+            var url = "/abnormal/rest/event?" + this.getParams({from: from, to: to});
 
             return $http.get(url);
         };
