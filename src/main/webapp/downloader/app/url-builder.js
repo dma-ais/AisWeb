@@ -23,12 +23,18 @@ function urlBuilder($scope,UrlService) {
     $scope.url = function(){
         var base = requestDomain+queryEndpoint;
         if(UrlService.areaValidService === true && UrlService.timeValidService === true){
+
+
+            var finalFilter = '';
+            if (UrlService.sourceFiltering != "" || UrlService.targetFilter != "") {
+                finalFilter = "filter="+UrlService.sourceFiltering+UrlService.targetFilter;
+            }
+
+
             requestString = base+
                 UrlService.fromDate+
                 UrlService.toDate+
-                "filter="+
-                UrlService.sourceFiltering+
-                UrlService.targetFilter+
+                finalFilter+
                 UrlService.area+
                 UrlService.tables+
                 UrlService.separator+
