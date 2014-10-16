@@ -5,7 +5,7 @@
 //Root domain for request url
 //var requestDomain = 'http://placeholder/';
 //default server
-var requestDomain = '/aisstore/rest';
+var requestDomain = '/aisview/rest';
 
 //query endpoint
 var queryEndpoint = '/store/query?';
