@@ -12,7 +12,7 @@ angular.module('dashboardApp.aisstore', ['ngRoute', 'ui.bootstrap'])
 
 .service('AisStoreService', function($http) {
 	this.ping = function() {
-		return $http.get("/aissview/rest/store/ping");
+		return $http.get("/aisview/rest/store/ping");
 	};
 
 
