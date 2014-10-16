@@ -5,7 +5,7 @@
 //Root domain for request url
 //var requestDomain = 'http://placeholder/';
 //default server
-var requestDomain = 'http://localhost:8090/';
+var requestDomain = '/aisstore/rest';
 
 //query endpoint
 var queryEndpoint = '/store/query?';
