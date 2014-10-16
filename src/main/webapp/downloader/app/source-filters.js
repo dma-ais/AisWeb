@@ -12,6 +12,8 @@ function sourceFilters($scope,UrlService,$http) {
     var sourceIds = [];
     sourceIds[0]= {text:'All', value: 'all&', include:true};
 
+    $scope.sourceTypes = [{text:'LIVE', value: 'LIVE&', include:false},{text:'SAT', value: 'SAT&', include:false}];
+
     //Source ID variables: source data.js
     $scope.sourceIds = sourceIds;
 
@@ -35,7 +37,10 @@ function sourceFilters($scope,UrlService,$http) {
             $scope.sourceIds[0].include=false;
             $scope.sourceIdTabHeader = tabHeadings[0]+'(*)';
         }
+
+
     }
+    
 
     $scope.pushToService = function() {
         var filter = '';
@@ -52,6 +57,7 @@ function sourceFilters($scope,UrlService,$http) {
                     break;
             }   
         }
+
         UrlService.setSourceFiltering(filter);
     }
 
