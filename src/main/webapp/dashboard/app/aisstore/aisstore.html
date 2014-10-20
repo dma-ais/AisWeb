@@ -1,5 +1,5 @@
 <div ng-controller="AisStoreCtrl" class="well">
-	<p>AisStore Stats</p>
+    <h2>Historical AIS statistics (AisStore)</h2>
 	<alert ng-repeat="stat in stats" type="{{stat.type}}" close="closeAlert($index)">{{stat.msg}}</alert>
 </div>
 
