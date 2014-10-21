@@ -62,5 +62,5 @@ angular.module('dashboardApp.aisabnormal', ['openlayers-directive'])
                 });
         };
         this.load_and_show_recent_events();
-        $interval(this.load_and_show_recent_events, 5000);
+        $interval(this.load_and_show_recent_events, 5*60*1000);
     }]);
