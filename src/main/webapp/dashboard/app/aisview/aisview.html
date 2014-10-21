@@ -17,10 +17,11 @@
         </div>
     </div>
 
-    <div class="well">
+    <div class="row">
         <h4>Proclaimed Fastest Ships (According to Sensor Data)</h4>
         <table class="table table-striped">
 
+            <td>#</td>
             <td>Name</td>
             <td>MMSI</td>
             <td>Speed (knots)</td>
@@ -29,6 +30,7 @@
 
 
             <tr ng-repeat="vessel in areaPresets[preset].topTenSpeed">
+                <td>{{$index + 1}}</td>
                 <td>{{vessel[2]}}</td>
                 <td>{{vessel[0]}}</td>
                 <td>{{vessel[1]/10}}</td>
@@ -37,6 +39,6 @@
             </tr>
         </table>
     </div>
-    
+
 </div>
 
