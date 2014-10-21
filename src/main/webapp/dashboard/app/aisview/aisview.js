@@ -75,6 +75,11 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
             return $http.get(url);
         };
 
+        this.vessel_target_details = function(params) {
+            var url = "/aisview/rest/vessel_target_details?" + this.getParams(params);
+            return $http.get(url);
+        }
+
         this.tracker_packets = function (params) {
             var url = "/aisview/rest/tracker/packets/json/?" + this.getParams(params);
             return $http.get(url);
@@ -90,6 +95,11 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
             return $http.get(url);
         }
 
+        this.tracker_static_mmsi = function (mmsi,params) {
+            var url = "/aisview/rest/tracker/static/"+mmsi+"/?" + this.getParams(params);
+            return $http.get(url);
+        }
+
         this.tracker_packets = function (params) {
             var url = "/aisview/rest/tracker/packets/?" + this.getParams(params);
             return $http.get(url);
@@ -98,20 +108,18 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
     })
 
     .controller('AisViewCtrl', function ($scope, AisViewService, charting) {
-        $scope.fastestVessel = [0, []];
         $scope.areaPresets = {
             'DNK': {
-                name: "Denmark", box: "53.583,4.517,64.0,18.0", size:"large"
+                name: "Denmark", box: "53.583,4.517,64.0,18.0", size:"large", topTenSpeed: []
             },
             'GREENLAND': {
-                name: "Greenland+Iceland", box: "84,-74,58,-10", size:"large"
+                name: "Greenland+Iceland", box: "84,-74,58,-10", size:"large", topTenSpeed: []
             },
 
             'NUUK': {
-                name: "Nuuk", box: "65,-54,63,-49", size: "small"
+                name: "Nuuk", box: "65,-54,63,-49", size: "small", topTenSpeed: []
             }
         };
-
 
 
         $scope.preset = 'DNK';
@@ -135,6 +143,8 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
                 var graph = populateGraph(data);
                 $scope.pies.vesselTypeStatic.data = graph;
             });
+
+            populateSpeedTable($scope.areaPresets[preset], AisViewService);
 
         }
 
@@ -198,5 +208,50 @@ function resetGraphs(graphs) {
         graph.data = [
             ['PLACEHOLDER', 1]
         ];
+    });
+}
+
+function populateSpeedTable(presetObject, AisViewService) {
+    AisViewService.tracker_dynamic({"box": presetObject.box, "columns": "mmsi;sog","filter":"t.sog < 102.3 & t.sog > 0 & t.cog < 360",  "output": "jsonobject"}).success(function (data) {
+        var ships = [];
+        for (var k in data.data.targets) {
+            if (data["data"]["targets"].hasOwnProperty(k)) {
+                ships.push(data["data"]["targets"][k]);
+            }
+
+        }
+
+        var sorted = ships.sort(function(a,b) {return b[1]- a[1]});
+        var filtered = [];
+        recurse(0,0,sorted,filtered);
+
+        function recurse(index,count,sorted,filtered) {
+
+            if (count >= 10 || index >= sorted.length) {
+                return;
+            }
+
+            if (sorted.hasOwnProperty(index)) {
+                var params = {"output":"jsonobject", "columns": "name;shipType"}
+                var response = AisViewService.tracker_static_mmsi(sorted[index][0],params);
+                response.success(function(data) {
+
+                    for (var k in data.data.targets) {
+                        if (data.data.targets.hasOwnProperty(k) && data.data.targets[k].length > 0) {
+                            sorted[index].push(data.data.targets[k][0]);
+                            sorted[index].push(data.data.targets[k][1]);
+                            filtered.push(sorted[index]);
+                            presetObject["topTenSpeed"] = filtered;
+                            count++;
+                        }
+                    }
+                    recurse(index+1,count,sorted,filtered);
+                });
+
+                response.error(function() {
+                    recurse(index+1,count,sorted,filtered);
+                });
+            }
+        }
     });
 }

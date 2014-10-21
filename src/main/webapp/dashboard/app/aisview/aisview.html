@@ -1,5 +1,7 @@
 <div ng-controller="AisViewCtrl" class="well">
     <h2>Live AIS statistics</h2>
+
+
 	<h3>Area: {{areaPresets[preset].name}}. Vessel Statistics (Bounding Box: {{areaPresets[preset].box}})</h3>
 
     <div class="btn-group">
@@ -14,5 +16,27 @@
 			<div ng-repeat="bar in bars" ui-chart="bar.data" chart-options="bar.options" ></div>
         </div>
     </div>
+
+    <div class="well">
+        <h4>Proclaimed Fastest Ships (According to Sensor Data)</h4>
+        <table class="table table-striped">
+
+            <td>Name</td>
+            <td>MMSI</td>
+            <td>Speed (knots)</td>
+            <td>Type</td>
+            <td>details</td>
+
+
+            <tr ng-repeat="vessel in areaPresets[preset].topTenSpeed">
+                <td>{{vessel[2]}}</td>
+                <td>{{vessel[0]}}</td>
+                <td>{{vessel[1]/10}}</td>
+                <td>{{vessel[3]}}</td>
+                <td><a href="http://www.marinetraffic.com/ais/details/ships/{{vessel[0]}}">(details)</a></td>
+            </tr>
+        </table>
+    </div>
+    
 </div>
 
