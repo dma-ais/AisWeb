@@ -66,42 +66,42 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
 
 
         this.ping = function () {
-            return $http.get("/aisview/rest/ping");
+            return $http.get("/beta/aisview/rest/ping");
         };
 
 
         this.vessel_list = function (params) {
-            var url = "/aisview/rest/vessel_list?" + this.getParams(params);
+            var url = "/beta/aisview/rest/vessel_list?" + this.getParams(params);
             return $http.get(url);
         };
 
         this.vessel_target_details = function(params) {
-            var url = "/aisview/rest/vessel_target_details?" + this.getParams(params);
+            var url = "/beta/aisview/rest/vessel_target_details?" + this.getParams(params);
             return $http.get(url);
         }
 
         this.tracker_packets = function (params) {
-            var url = "/aisview/rest/tracker/packets/json/?" + this.getParams(params);
+            var url = "/beta/aisview/rest/tracker/packets/json/?" + this.getParams(params);
             return $http.get(url);
         }
 
         this.tracker_dynamic = function (params) {
-            var url = "/aisview/rest/tracker/dynamic/?" + this.getParams(params);
+            var url = "/beta/aisview/rest/tracker/dynamic/?" + this.getParams(params);
             return $http.get(url);
         }
 
         this.tracker_static = function (params) {
-            var url = "/aisview/rest/tracker/static/?" + this.getParams(params);
+            var url = "/beta/aisview/rest/tracker/static/?" + this.getParams(params);
             return $http.get(url);
         }
 
         this.tracker_static_mmsi = function (mmsi,params) {
-            var url = "/aisview/rest/tracker/static/"+mmsi+"/?" + this.getParams(params);
+            var url = "/beta/aisview/rest/tracker/static/"+mmsi+"/?" + this.getParams(params);
             return $http.get(url);
         }
 
         this.tracker_packets = function (params) {
-            var url = "/aisview/rest/tracker/packets/?" + this.getParams(params);
+            var url = "/beta/aisview/rest/tracker/packets/?" + this.getParams(params);
             return $http.get(url);
         }
 
