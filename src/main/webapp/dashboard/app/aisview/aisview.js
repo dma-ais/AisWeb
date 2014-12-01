@@ -118,7 +118,12 @@ angular.module('dashboardApp.aisview', ['ui.chart'])
 
             'NUUK': {
                 name: "Nuuk", box: "65,-54,63,-49", size: "small", topTenSpeed: []
+            },
+
+            'WORLD': {
+                name: "World", box: "-90,-180,90,180", size: "small", topTenSpeed: []
             }
+
         };
 
 
