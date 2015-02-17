@@ -324,7 +324,7 @@ function addLayers(){
 	// Add OpenStreetMap Layer
 	var osm = new OpenLayers.Layer.OSM(
 		"OSM",
-		"http://osm.e-navigation.net/${z}/${x}/${y}.png",
+		"//osm.e-navigation.net/${z}/${x}/${y}.png",
 		{
 			'layers':'basic',
 			'isBaseLayer': true
