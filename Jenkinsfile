@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                withMaven() {
+                withMaven(options: [junitPublisher(ignoreAttachments: false), artifactsPublisher()]) {
                     sh 'mvn -DincludeSrcJavadocs clean source:jar install'
                 }
             }
