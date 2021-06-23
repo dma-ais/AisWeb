@@ -22,7 +22,7 @@
     </scm>
 
     <properties>
-        <dependencies.jetty.version>9.2.2.v20140723</dependencies.jetty.version>
+        <dependencies.jetty.version>9.4.41.v20210516</dependencies.jetty.version>
         <dependencies.jersey.version>2.11</dependencies.jersey.version>
     </properties>
 
